@@ -15,7 +15,8 @@ print("Question1\n" +
       "---------\n\t")
 
 # Taken from import example-application-plot-out-of-core-classification.pt so we could call it's functions
-import plot_out_of_core_classification
+from plot_out_of_core_classification import *
+
 
 # From the code, accessing the reuters document data base.
 data_stream = stream_reuters_documents()
