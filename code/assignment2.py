@@ -6,6 +6,8 @@ import math
 from nltk import word_tokenize
 import numpy as np
 
+from sklearn.feature_extraction import DictVectorizer
+
 ##Our defines:
 q1Verbose = 1
 
@@ -78,4 +80,68 @@ for i in range(len(df['body'])):
 
 print("Question2\n" +
       "---------\n\t")
+
+# Split data set to train and test data sets
+train_sents = list(nltk.corpus.conll2002.iob_sents('esp.train'))
+test_sents = list(nltk.corpus.conll2002.iob_sents('esp.testb'))
+
+#
+def get_ort(word):
+    retVal = []
+    if (re.match("^-?[0-9]+(.[0-9]+)?$",word) != None):
+        retVal + "number"
+    if (re.search("?[0-9]",word) != None):
+        retVal + "contains-digit"
+    if (word.find("-")!= -1):
+        retVal + "contains-hyphen"
+    if (re.match("^?[A-Z]$",word) != None):
+        retVal + "all-capitals"
+    return "regular"
+
+
+# Now we'll define a function to create a features dictionary out of the dataset
+def word2features(sent, i):
+    word = sent[i][0]
+    postag = sent[i][1]
+    features = [
+        'BIAS',
+        'WORD-FROM=' + word.lower(),
+        'POS=' + postag,
+        'ORT=' + get_ort(word),
+        'word[-2:]=' + word[-2:],
+        'word.isupper=%s' % word.isupper(),
+        'word.istitle=%s' % word.istitle(),
+        'word.isdigit=%s' % word.isdigit(),
+        'postag=' + postag,
+        'postag[:2]=' + postag[:2],
+    ]
+    if i > 0:
+        word1 = sent[i-1][0]
+        postag1 = sent[i-1][1]
+        features.extend([
+            '-1:word.lower=' + word1.lower(),
+            '-1:word.istitle=%s' % word1.istitle(),
+            '-1:word.isupper=%s' % word1.isupper(),
+            '-1:postag=' + postag1,
+            '-1:postag[:2]=' + postag1[:2],
+        ])
+    else:
+        features.append('BOS')
+
+    if i < len(sent)-1:
+        word1 = sent[i+1][0]
+        postag1 = sent[i+1][1]
+        features.extend([
+            '+1:word.lower=' + word1.lower(),
+            '+1:word.istitle=%s' % word1.istitle(),
+            '+1:word.isupper=%s' % word1.isupper(),
+            '+1:postag=' + postag1,
+            '+1:postag[:2]=' + postag1[:2],
+        ])
+    else:
+        features.append('EOS')
+
+    return features
+
+
 ##############################################        End of Q2     ####################################################
