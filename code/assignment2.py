@@ -432,8 +432,8 @@ def word2features(sent, i):
     postag = sent[i][1]
     features = {
         'WORD-FROM': word.lower(),
-        'POS=': postag,
-        'ORT=': get_ort(word),
+        'POS': postag,
+        'ORT': get_ort(word),
         'PREFIX1': word.lower()[:1],
         'PREFIX2': word.lower()[:2],
         'PREFIX3': word.lower()[:3],
@@ -521,8 +521,8 @@ def word2features2(sent, i):
     postag = sent[i][1]
     fetures = {
         'WORD-FROM': word.lower(),
-        'POS=': postag,
-        'ORT=': get_ort(word),
+        'POS': postag,
+        'ORT': get_ort(word),
         'PREFIX1': word.lower()[:1],
         'PREFIX2': word.lower()[:2],
         'PREFIX3': word.lower()[:3],
