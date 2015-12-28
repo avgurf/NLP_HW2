@@ -1,4 +1,4 @@
-##Our import:
+##Our import: 
 import nltk
 from nltk.probability import ConditionalFreqDist
 import pandas as pd
@@ -18,6 +18,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, f1_score
 from sklearn.feature_extraction import DictVectorizer
+<<<<<<< HEAD
 
 import matplotlib.pyplot as plt
 import csv
@@ -37,6 +38,28 @@ from sklearn.learning_curve import learning_curve
 
 
 ##Our defines:
+=======
+
+%matplotlib inline
+import matplotlib.pyplot as plt
+import csv
+from textblob import TextBlob
+import pandas
+import sklearn
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.svm import SVC, LinearSVC
+from sklearn.metrics import classification_report, f1_score, accuracy_score, confusion_matrix
+from sklearn.pipeline import Pipeline
+from sklearn.grid_search import GridSearchCV
+from sklearn.cross_validation import StratifiedKFold, cross_val_score, train_test_split 
+from sklearn.tree import DecisionTreeClassifier 
+from sklearn.learning_curve import learning_curve
+
+
+##Our defines: 
+>>>>>>> 22e0b36be7e5037ca51d4ab6a03778ef5ee98909
 q1Verbose=1
 q113_verbose=0
 q2Verbose=1
@@ -421,6 +444,16 @@ print(confusion)
 
 from sklearn.linear_model import LogisticRegression
 
+from sklearn.base import BaseEstimator, TransformerMixin
+class TextStats(BaseEstimator, TransformerMixin):
+    """Extract features from each document for DictVectorizer"""
+
+    def fit(self, x, y=None):
+        return self
+
+    def transform(self, posts):
+        return [{'length': len(text)} for text in posts]
+
 
 def build_pipeline2():
     pipeline = Pipeline([
@@ -435,6 +468,73 @@ def build_pipeline2():
     ])
     return pipeline
 
+
+def q131():
+    messages1 = pd.read_csv('./data/SMSSpamCollection', sep='\t', quoting=csv.QUOTE_NONE,
+                               names=["class", "text"])
+    test_text = messages1['text'].values
+    test_y = messages1['class'].values.astype(str)
+
+    predictions = pipeline.predict(test_text)
+
+    confusion = numpy.array([[0, 0], [0, 0]])
+    confusion += confusion_matrix(test_y, predictions)
+    score = f1_score(test_y, predictions, pos_label=SPAM)
+    scores.append(score)
+
+    print('Total smss classified:', len(messages1))
+    print('Score:', sum(scores)/len(scores))
+    print('Confusion matrix:')
+    print(confusion)
+
+def q132():
+    def split_into_tokens(message):
+        return TextBlob(message).words
+
+    def split_into_lemmas(message):
+        message = message.lower()
+        words = TextBlob(message).words
+        # for each word, take its "base form" = lemma
+        return [word.lemma for word in words]
+
+
+    bow_transformer = CountVectorizer(analyzer=split_into_lemmas).fit(data['text'])
+    messages_bow = bow_transformer.transform(data['text'])
+    tfidf_transformer = TfidfTransformer().fit(messages_bow)
+    messages_tfidf = tfidf_transformer.transform(messages_bow)
+    spam_detector = MultinomialNB().fit(messages_tfidf, data['class'])
+    all_predictions = spam_detector.predict(messages_tfidf)
+
+    print('accuracy', accuracy_score(data['class'], all_predictions))
+    print('confusion matrix\n', confusion_matrix(data['class'], all_predictions))
+    print('(row=expected, col=predicted)')
+
+def q133():
+    def split_into_lemmas(message):
+        message = message.lower()
+        words = TextBlob(message).words
+        # for each word, take its "base form" = lemma
+        return [word.lemma for word in words]
+
+    bow_transformer = CountVectorizer(analyzer=split_into_lemmas).fit(data['text'])
+    rare_feats = bow_transformer.get_feature_names()
+    zacs_bow=CountVectorizer(ngram_range=(1, 2)).fit(data['text'])
+    zac_bow_words=zacs_bow.get_feature_names()
+    intersection = set(rare_feats).intersection(zac_bow_words)
+    only_in_zac=list(set(zac_bow_words)-set(intersection))
+    only_in_rare=list(set(rare_feats)-set(intersection))
+    len_o_z = len(only_in_zac)
+    len_o_r = len(only_in_rare)
+    sum_o = len_o_z + len_o_r
+    per_z = len_o_z/sum_o
+    per_r = len_o_r/sum_o
+    print("There are %d features in common, between both groups." %len(intersection))
+    print("There are %d unique features in Zac's model." % len_o_z)
+    print("There are %d unique features in Zac's model." %len_o_r)
+    print("Together, both model's have %d features. " %sum_o )
+    print("Clearly, Zac's model holds %f of all features. " % per_z)
+    print("Clearly, Rare's model holds %f of all features. " % per_r)
+    print("Zac's model is much larger, on account of using bigrams and not stemming. ")
 
 ##############################################        End of Q1     ####################################################
 
