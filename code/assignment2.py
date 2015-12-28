@@ -2,22 +2,44 @@
 import nltk
 from nltk.probability import ConditionalFreqDist
 import pandas as pd
+from pandas import DataFrame
 import math
 from nltk import word_tokenize
-import numpy
 import numpy as np
+from random import randint
+import csv
+import numpy
 import re
-from sklearn.feature_extraction import DictVectorizer
+
+import sys
+
 from sklearn.cross_validation import KFold
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix, f1_score, precision_recall_fscore_support
-from pandas import DataFrame
-import sys
+from sklearn.metrics import confusion_matrix, f1_score
+from sklearn.feature_extraction import DictVectorizer
+
+import matplotlib.pyplot as plt
+import csv
+from textblob import TextBlob
+import pandas
+import sklearn
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.svm import SVC, LinearSVC
+from sklearn.metrics import classification_report, f1_score, accuracy_score, confusion_matrix, precision_recall_fscore_support
+from sklearn.pipeline import Pipeline
+from sklearn.grid_search import GridSearchCV
+from sklearn.cross_validation import StratifiedKFold, cross_val_score, train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.learning_curve import learning_curve
+
 
 ##Our defines:
-q1Verbose = 1
-q2Verbose = 1
+q1Verbose=1
+q113_verbose=0
+q2Verbose=1
 
 ##############################################       Question 1     ####################################################
 
