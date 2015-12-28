@@ -646,12 +646,12 @@ for i, lbl in enumerate(lbl_list):
 print("\t---")
 
 print("-Per-tag model1 recall:\n")
-for i, lbl in enumerate(lbl_list[0]):
+for i, lbl in enumerate(lbl_list):
     print('Tag: \'{0}\' recall: {1}'.format(lbl,prf1[1][i]))
 print("\t---")
 
 print("-Per-tag model1 f-score:\n")
-for i, lbl in enumerate(lbl_list[0]):
+for i, lbl in enumerate(lbl_list):
     print('Tag: \'{0}\' f-score: {1}'.format(lbl,prf1[2][i]))
 print("\t---")
 
@@ -659,17 +659,17 @@ print("\tModel2: per-tag statistics:\n")
 prf2 = precision_recall_fscore_support(y_test, predictions1, labels=lbl_list)
 
 print("-Per-tag model2 precision:\n")
-for i, lbl in enumerate(lbl_list[0]):
+for i, lbl in enumerate(lbl_list):
     print('Tag: \'{0}\' precision: {1}'.format(lbl, prf2[0][i]))
 print("\t---")
 
 print("-Per-tag model2 recall:\n")
-for i, lbl in enumerate(lbl_list[0]):
+for i, lbl in enumerate(lbl_list):
     print('Tag: \'{0}\' recall: {1}'.format(lbl, prf2[1][i]))
 print("\t---")
 
 print("-Per-tag model2 f-score:\n")
-for i, lbl in enumerate(lbl_list[0]):
+for i, lbl in enumerate(lbl_list):
     print('Tag: \'{0}\' f-score: {1}'.format(lbl,prf2[2][i]))
 print("\t---")
 
