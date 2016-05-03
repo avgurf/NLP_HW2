@@ -18,13 +18,13 @@ Code Intructions
   The solution for the  Assignment is in the form of an [iPython (Jupyter) notebook file](https://www.cs.bgu.ac.il/~elhadad/nlp16/notebooks.html) (with extension ipynb). 
   The main noteboos solution file is [p1.ipynb](https://github.com/avgurf/NLP_HW2/tree/master/p1.ipynb)
   
-  Most importent code is also located in a .py file under[/code/assignment2.py](https://github.com/avgurf/NLP_HW2/tree/master/code/assignment2.py)
+  Most important code is also located in a .py file under[/code/assignment2.py](https://github.com/avgurf/NLP_HW2/tree/master/code/assignment2.py)
   
   The [Spam Data](http://www.cs.bgu.ac.il/~elhadad/nlp16/spam.zip) set should be extracted to the folder [data](https://github.com/avgurf/NLP_HW2/tree/master/data), as it is left empty.
 
 Submitted Solution
 -------------------
-  An organized submitted solution is available under releases
+  An organized submitted solution is available under [release](https://github.com/avgurf/NLP_HW2/releases/tag/submit)
 
 NLP161
 ------
